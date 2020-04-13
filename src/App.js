@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import Search from './components/search/search.component';
+import CardList from './components/cardList/cardList.component';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
+const App = () => {
+  const [countryData, setCountryData] = useState([]);
+  const [searchItem, setSearchItem] = useState('');
+
+  useEffect(() => {
+    getApi();
+  }, []);
+
+  const getApi = async () => {
+    const response = await fetch(
+      `https://coronavirus-19-api.herokuapp.com/countries/`
+    );
+    const data = await response.json();
+    setCountryData(data);
+  };
+
+  const filterData = countryData.filter((countries) => {
+    return countries.country.toLowerCase().includes(searchItem.toLowerCase());
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className='App'>
+      <header className='App-header'>
+        <Search handleSearch={(e) => setSearchItem(e.target.value)} />
+        <CardList countryData={filterData} />
       </header>
     </div>
   );
-}
+};
 
 export default App;
