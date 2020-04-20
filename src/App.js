@@ -1,21 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Particles from 'react-particles-js';
 import Search from './components/search/search.component';
 import CardList from './components/cardList/cardList.component';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-const particlesOptions = {
-  particles: {
-    number: {
-      value: 80,
-      density: {
-        enable: true,
-        value_area: 800,
-      },
-    },
-  },
-};
 
 const App = () => {
   const [countryData, setCountryData] = useState([]);
@@ -43,7 +30,6 @@ const App = () => {
         <h2 className='h2'>COVID-19 Tracker</h2>
         <br />
         <br />
-        <Particles className='particles' params={particlesOptions} />
 
         <Search handleSearch={(e) => setSearchItem(e.target.value)} />
         <CardList countryData={filterData} />
